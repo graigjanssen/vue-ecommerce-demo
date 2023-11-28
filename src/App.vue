@@ -1,30 +1,29 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/">Home</router-link>
   </nav>
   <router-view />
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import { defineComponent, ref, onMounted } from "vue";
+import productService from "./services/productService";
+import { Product } from "./services/types";
 
-nav {
-  padding: 30px;
+export default defineComponent({
+  setup() {
+    const products = ref<Product[]>([]);
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+    onMounted(async () => {
+      try {
+        products.value = await productService.getAllProducts();
+      } catch (error) {
+        console.error(error);
+      }
+      console.log("products: ", products.value);
+    });
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+    return { products };
+  },
+});
+</script>
