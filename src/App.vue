@@ -1,29 +1,15 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link>
+    <ul>
+      <li><router-link to="/">Home</router-link></li>
+      <li><router-link to="products">Product List</router-link></li>
+    </ul>
   </nav>
   <router-view />
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
-import productService from "./services/productService";
-import { Product } from "./services/types";
+import { defineComponent } from "vue";
 
-export default defineComponent({
-  setup() {
-    const products = ref<Product[]>([]);
-
-    onMounted(async () => {
-      try {
-        products.value = await productService.getAllProducts();
-      } catch (error) {
-        console.error(error);
-      }
-      console.log("products: ", products.value);
-    });
-
-    return { products };
-  },
-});
+export default defineComponent({});
 </script>

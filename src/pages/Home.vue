@@ -1,5 +1,7 @@
 <template>
-  <div class="home"></div>
+  <div class="home">
+    <h1>Fake Store Home</h1>
+  </div>
 </template>
 
 <script lang="ts">
