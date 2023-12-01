@@ -34,6 +34,7 @@
 <script lang="ts">
 import { defineComponent, onMounted } from "vue";
 import { useProductsStore } from "../store/productsStore";
+import { formatPrice } from "@/utilities/formatters";
 
 export default defineComponent({
   setup() {
@@ -42,13 +43,6 @@ export default defineComponent({
     onMounted(() => {
       productsStore.fetchProducts();
     });
-
-    const formatPrice = (value: number): string => {
-      return new Intl.NumberFormat("en-us", {
-        style: "currency",
-        currency: "USD",
-      }).format(value);
-    };
 
     return { productsStore, formatPrice };
   },
