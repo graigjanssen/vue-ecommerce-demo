@@ -31,21 +31,15 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted } from "vue";
+<script setup lang="ts">
+import { onMounted } from "vue";
 import { useProductsStore } from "../store/productsStore";
 import { formatPrice } from "@/utilities/formatters";
 
-export default defineComponent({
-  setup() {
-    const productsStore = useProductsStore();
+const productsStore = useProductsStore();
 
-    onMounted(() => {
-      productsStore.fetchProducts();
-    });
-
-    return { productsStore, formatPrice };
-  },
+onMounted(() => {
+  productsStore.fetchProducts();
 });
 </script>
 

@@ -28,31 +28,30 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted, computed } from "vue";
+<script setup lang="ts">
+import { onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useProductsStore } from "@/store/productsStore";
+import { useCartStore } from "@/store/cartStore";
 import { formatPrice } from "@/utilities/formatters";
 
-export default defineComponent({
-  setup() {
-    const productsStore = useProductsStore();
-    const route = useRoute();
-    const productId =
-      typeof route.params.id === "string" ? parseInt(route.params.id, 10) : 0;
+const productsStore = useProductsStore();
+const cartStore = useCartStore();
+const route = useRoute();
+const productId =
+  typeof route.params.id === "string" ? parseInt(route.params.id, 10) : 0;
 
-    onMounted(() => {
-      productsStore.fetchProductDetails(productId);
-    });
-
-    const productDetails = computed(() => productsStore.productDetails);
-
-    const addToCart = () => {
-      console.log("addToCart");
-    };
-    return { productsStore, productDetails, formatPrice, addToCart };
-  },
+onMounted(() => {
+  productsStore.fetchProductDetails(productId);
 });
+
+const productDetails = computed(() => productsStore.productDetails);
+
+const addToCart = () => {
+  if (productDetails.value) {
+    cartStore.addToCart(productDetails.value);
+  }
+};
 </script>
 
 <style scoped lang="scss">
