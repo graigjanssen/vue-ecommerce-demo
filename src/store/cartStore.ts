@@ -9,8 +9,8 @@ export const useCartStore = defineStore("cart", {
     addToCart(item: Product) {
       this.items.push(item);
     },
-    removeFromCart(itemToRemove: Product) {
-      this.items = this.items.filter((item) => item !== itemToRemove);
+    removeFromCart(id: number) {
+      this.items = this.items.filter((item) => id !== item.id);
     },
   },
 });
